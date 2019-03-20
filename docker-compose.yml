@@ -3,8 +3,8 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - /wordpress/mysql:/data/app-data/wordpress/mysql
-    restart: unless-stopped
+      - /data/app-data/wordpress/mysql:/var/lib/mysql
+    restart: always
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: thitruot103
@@ -17,12 +17,10 @@ services:
     image: wordpress:latest
     ports: 
       - '20000:80'
-    restart: unless-stopped
+    restart: always
     container_name: wordpress
     environment:
       WORDPRESS_DB_HOST: mysql:3306
       WORDPRESS_DB_USER: domina
       WORDPRESS_DB_PASSWORD: 12345aA@
       WORDPRESS_DB_NAME: wordpress_db
-    volumes:
-      - /wordpress:/data/app-data/wordpress  
