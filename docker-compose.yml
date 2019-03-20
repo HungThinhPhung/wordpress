@@ -1,10 +1,11 @@
 version: '3'
 services:
   mysql:
-    image: mysql:latest
+    image: mysql:5.7
     volumes:
       - /wordpress/mysql:/data/app-data/wordpress/mysql
-    restart: always
+    restart: unless-stopped
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: thitruot103
       MYSQL_DATABASE: wordpress_db
@@ -14,12 +15,14 @@ services:
     depends_on:
       - mysql
     image: wordpress:latest
-    port: 
-      - '20000:20000'
-    restart: always
+    ports: 
+      - '20000:80'
+    restart: unless-stopped
+    container_name: wordpress
     environment:
       WORDPRESS_DB_HOST: mysql:3306
       WORDPRESS_DB_USER: domina
       WORDPRESS_DB_PASSWORD: 12345aA@
+      WORDPRESS_DB_NAME: wordpress_db
     volumes:
       - /wordpress:/data/app-data/wordpress  
